@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crown & Coin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-container">
+    <h1>Crown & Coin</h1>
+
+    <div class="canvas-container">
+      <div class="you-dot"></div>
+      <div id="dots-area"></div>
+    </div>
+
+    <div class="stats">
+      <p>Day: <span id="day">1</span>/10</p>
+      <p>GDP: <span id="gdp">100</span></p>
+      <p>CPI: <span id="cpi">2</span></p>
+      <p>Unemployment: <span id="unemployment">5</span>%</p>
+      <p>Inequality: <span id="inequality">30</span>%</p>
+      <p>Money Multiplier: <span id="multiplier">5</span></p>
+    </div>
+
+    <div class="prompt-box">
+      <p id="prompt">Welcome, Ruler. Are you ready to begin your economic reign?</p>
+      <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
