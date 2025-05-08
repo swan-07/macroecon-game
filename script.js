@@ -109,32 +109,64 @@ function nextPrompt() {
     spawnDots(prompt.faction); 
   }
 
+
+  const letsSeeBtn = document.getElementById('letsSeeBtn');
+  const endingScreen = document.getElementById('endingScreen');
+  const endingText = document.getElementById('endingText');
+  endingScreen.style.pointerEvents = 'auto';
+
+
+  letsSeeBtn.addEventListener('click', () => {
+    const chosen = window.endingResult || {
+      text: "Ending ???: Mysterious fate awaits...",
+      color: "#34495e"
+    };
   
-function endGame() {
-  document.querySelector('.prompt-box').innerHTML = `
-    <h2>Game Over</h2>
-    <p>Final GDP: ${gdp}</p>
-    <p>Inflation (%): ${inflation}</p>
-    <p>Unemployment: ${unemployment}%</p>
-    <p>Inequality: ${inequality}%</p>
-    <p>Your reign has ended. How will history will judge you?</p>
-  `;
+    document.body.style.backgroundColor = chosen.color;
+    endingText.textContent = chosen.text;
+    document.querySelector('.game-container').style.display = 'none';
+    endingScreen.style.display = 'flex';
+  });
 
-
-  if(inequality > 50){
-    // 🔥 Social Uprising
+  function endGame() {
+    document.querySelector('.prompt-box').innerHTML = `
+      <h2>Game Over</h2>
+      <p>Final GDP: ${gdp}</p>
+      <p>Inflation (%): ${inflation}</p>
+      <p>Unemployment: ${unemployment}%</p>
+      <p>Inequality: ${inequality}%</p>
+      <p>Your reign has ended. How will history judge you?</p>
+    `;
+  
+    document.querySelector('.ending-trigger').style.display = 'block';
+  
+    // Store ending based on final stats
+    if (inequality > 50) {
+      // 🔥 Social Uprising
+      window.endingResult = {
+        text: "Ending D: Chaos consumed the kingdom.",
+        color: "#8e44ad"
+      };
+    } else if (unemployment + inflation > 15) {
+      // 💀 Stagflation Nightmare
+      window.endingResult = {
+        text: "Ending B: The people overthrew your reign.",
+        color: "#c0392b"
+      };
+    } else if (gdp > 200) {
+      // ⭐ Booming Paradise
+      window.endingResult = {
+        text: "Ending A: Your policies led to a golden age.",
+        color: "#2c3e50"
+      };
+    } else {
+      // ⚖️ Balanced Growth
+      window.endingResult = {
+        text: "Ending C: You restored balance and harmony.",
+        color: "#27ae60"
+      };
+    }
   }
-  else if(unemployment+inflation > 15){
-    // 💀 Stagflation Nightmare
-  }
-  else if(gdp > 200){
-    // ⭐ Booming Paradise
-  }
-  else{
-    // ⚖️ Balanced Growth
-  }
-
-}
 
 let currentPrompt;
 
@@ -167,4 +199,3 @@ document.getElementById("noBtn").addEventListener("click", () => {
 
 
 updateStats();
-// nextPrompt();
