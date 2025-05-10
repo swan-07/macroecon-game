@@ -14,7 +14,7 @@ const factions = {
 
 let prompts = [
   {
-    text: "A merchant guild proposes lower taxes to boost trade.?",
+    text: "A merchant guild proposes lower taxes to boost trade.",
     yes: () => {
       gdp += 10;
       inequality += 5;
@@ -207,13 +207,13 @@ function endGame() {
       color: "#8e44ad",
     };
   } else if (unemployment + inflation > 15) {
-    // 💀 Stagflation Nightmare
+    // 💀 Stagflation 
     window.endingResult = {
       text: "Ending B: The people overthrew your reign.",
       color: "#c0392b",
     };
   } else if (gdp > 200) {
-    // ⭐ Booming Paradise
+    // ⭐ Paradise
     window.endingResult = {
       text: "Ending A: Your policies led to a golden age.",
       color: "#2c3e50",
