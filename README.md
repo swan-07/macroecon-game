@@ -1,12 +1,4 @@
 # macroecon-game
-<!-- //todo: music/audio
-//todo: add crown to player character (left)
-//todo: add prompts
-///todo: have the other players bounce in from right
-//todo: make the numbers red when theyre below 20/above 80
-fiscal and monetary systems so you can do taxes open market operations etc etc and you have stats like mps which allows you to calculate money mulitplier and you get little states like how your gdp cpi unemployment inflation and you also have like an inequality indicator. you just get prompts and over ten days you try to grow your economy as best you can 
--->
-
 
 🎮 Game Overview
 Crown & Coin: A Kingdom's Economy

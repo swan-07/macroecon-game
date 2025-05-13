@@ -2,7 +2,7 @@ let day = 1;
 let gdp = 100;
 let inflation = 2;
 let unemployment = 5;
-let inequality = 30;
+let inequality = 20;
 let count = 0;
 
 const factions = {
@@ -16,23 +16,30 @@ let prompts = [
   {
     text: "A merchant guild proposes lower taxes to boost trade.",
     yes: () => {
-      gdp += 10;
-      inequality += 5;
-      inflation += 2;
+      gdp += 8;
+      inflation += 3;
+      unemployment -= 0;
+      inequality += 3;
     },
     no: () => {
-      gdp -= 1;
+      gdp -= 4;
       inflation -= 1;
+      unemployment -= 0;
+      inequality -= 1;
     },
     faction: "Merchants",
   },
   {
-    text: "Peasants request increased spending on public services.",
+    text: "Peasants request increased spending on public services and infrastructure.",
     yes: () => {
-      unemployment -= 2;
-      gdp += 5;
+      gdp += 10;
+      inflation += 5;
+      unemployment -= 5;
+      inequality -= 4;
     },
     no: () => {
+      gdp -= 5;
+      inflation -= 2;
       unemployment += 2;
       inequality += 2;
     },
@@ -43,77 +50,58 @@ let prompts = [
     yes: () => {
       gdp += 7;
       inflation += 5;
+      unemployment -= 3;
+      inequality -= 0;
     },
     no: () => {
       gdp -= 3;
-      inflation -= 1;
+      inflation -= 2;
+      unemployment += 1;
+      inequality += 0;
     },
     faction: "Bankers",
   },
   {
     text: "Introduce a progressive wealth tax?",
     yes: () => {
-      inequality -= 5;
-      gdp -= 3;
+      inequality -= 8;
+      gdp -= 5;
     },
     no: () => {
-      inequality += 3;
-      gdp + 2;
+      inequality += 4;
+      gdp += 2;
     },
     faction: "Nobles",
   },
   {
     text: "The peasants demand a minimum wage.",
     yes: () => {
-      gdp -= 5;
-      inflation -= 2;
-      unemployment += 1;
-      inequality -= 5;
+      gdp -= 10;
+      inflation += 5;
+      unemployment += 5;
+      inequality -= 7;
     },
     no: () => {
-      gdp += 2;
+      gdp += 5;
+      inflation -= 2;
+      unemployment -= 2;
       inequality += 3;
     },
     faction: "Peasants",
   },
   {
-    text: "The merchants demand a lower minimum wage.",
+    text: "The merchants demand a lower minimum working age.",
     yes: () => {
-      gdp += 4;
-      inflation += 2;
-      unemployment -= 1;
-      inequality += 3;
+      gdp += 7;
+      inflation -= 2;
+      unemployment -= 2;
+      inequality += 7;
     },
     no: () => {
-      gdp -= 2;
-      inequality -= 1;
-    },
-    faction: "Merchants",
-  },
-  {
-    text: "The merchants want lower taxes.",
-    yes: () => {
-      gdp += 3;
-      inflation += 5;
-      unemployment -= 1;
-      inequality += 3;
-    },
-    no: () => {
-      gdp -= 2;
+      gdp -= 3;
+      inflation += 1;
+      unemployment += 1;
       inequality -= 3;
-    },
-    faction: "Merchants",
-  },
-  {
-    text: "The merchants want lower taxes.",
-    yes: () => {
-      gdp += 3;
-      inflation += 2;
-      unemployment -= 1;
-      inequality += 3;
-    },
-    no: () => {
-      gdp -= 2;
     },
     faction: "Merchants",
   },
@@ -123,26 +111,29 @@ let prompts = [
       gdp += 4;
       inflation += 3;
       unemployment -= 3;
-      inequality += 5;
+      inequality += 0;
     },
     no: () => {
-      gdp -= 3;
+      gdp -= 2;
+      inflation += 1;
       unemployment += 1;
-      inflation -= 1;
+      inequality += 0;
     },
     faction: "Nobles",
   },
   {
     text: "The bankers want to print more money",
     yes: () => {
-      gdp += 1;
+      gdp += 3;
       inflation += 10;
-      unemployment -= 1;
+      unemployment -= 3;
+      inequality -= 2;
     },
     no: () => {
-      gdp -= 4;
-      unemployment += 4;
-      inflation -= 2;
+      gdp -= 1;
+      inflation -= 5;
+      unemployment += 1;
+      inequality += 1;
     },
     faction: "Bankers",
   },
@@ -150,10 +141,15 @@ let prompts = [
     text: "The bankers want a lowered federal funds rate.",
     yes: () => {
       gdp += 5;
+      inflation -= 5;
+      unemployment -= 3;
+      inequality += 0;
     },
     no: () => {
-      unemployment += 2;
-      gdp -= 7;
+      gdp -= 2;
+      inflation += 2;
+      unemployment += 1;
+      inequality += 0;
     },
     faction: "Bankers",
   }
@@ -225,28 +221,28 @@ function endGame() {
   document.querySelector(".ending-trigger").style.display = "block";
 
   // Store ending based on final stats
-  if (inequality > 50) {
-    // 🔥 Social Uprising
+  if (inequality > 40) {
+    // Social Uprising
     window.endingResult = {
-      text: "Ending D: Chaos consumed the kingdom.",
+      text: "Ending D: High inequality lead to revolutions and chaos consumed the kingdom.",
       color: "#8e44ad",
     };
-  } else if (unemployment + inflation > 15) {
-    // 💀 Stagflation 
+  } else if (unemployment + inflation > 30 || gdp < 40) {
+    // Stagflation 
     window.endingResult = {
-      text: "Ending B: The people overthrew your reign.",
+      text: "Ending B: Frustrated with the macroeconomic failures of your reign, the people overthrew your kingdom.",
       color: "#c0392b",
     };
   } else if (gdp > 200) {
-    // ⭐ Paradise
+    // Paradise
     window.endingResult = {
-      text: "Ending A: Your policies led to a golden age.",
+      text: "Ending A: Your policies led to a golden age and your name will go among the greats in history.",
       color: "#2c3e50",
     };
   } else {
-    // ⚖️ Balanced Growth
+    // Balanced Growth
     window.endingResult = {
-      text: "Ending C: You restored balance and harmony.",
+      text: "Ending C: You restored balance and harmony to the kingdom.",
       color: "#27ae60",
     };
   }
@@ -261,6 +257,7 @@ document.getElementById("yesBtn").addEventListener("click", () => {
   c = 1;
   count++;
   updateStats();
+  updateStatStyles()
   nextPrompt();
   if (count >= 3) {
     day++;
@@ -273,6 +270,7 @@ document.getElementById("noBtn").addEventListener("click", () => {
   c = 1;
   count++;
   updateStats();
+  updateStatStyles()
   nextPrompt();
   if (count >= 3) {
     day++;
@@ -281,3 +279,26 @@ document.getElementById("noBtn").addEventListener("click", () => {
 });
 
 updateStats();
+
+
+function updateStatStyles() {
+  const gdp = parseFloat(document.getElementById("gdp").textContent);
+  const inflation = parseFloat(document.getElementById("inflation").textContent);
+  const unemployment = parseFloat(document.getElementById("unemployment").textContent);
+  const inequality = parseFloat(document.getElementById("inequality").textContent);
+
+  const gdpElem = document.getElementById("gdp");
+  const inflationElem = document.getElementById("inflation");
+  const unemploymentElem = document.getElementById("unemployment");
+  const inequalityElem = document.getElementById("inequality");
+
+  gdpElem.classList.remove("stat-alert");
+  inflationElem.classList.remove("stat-alert");
+  unemploymentElem.classList.remove("stat-alert");
+  inequalityElem.classList.remove("stat-alert");
+
+  if (gdp < 30) gdpElem.classList.add("stat-alert");
+  if (inflation > 10) inflationElem.classList.add("stat-alert");
+  if (unemployment > 10) unemploymentElem.classList.add("stat-alert");
+  if (inequality > 30) inequalityElem.classList.add("stat-alert");
+}

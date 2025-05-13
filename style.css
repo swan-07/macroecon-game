@@ -265,3 +265,8 @@ button {
 		}
 	}
 }
+
+.stat-alert {
+  color: red;
+  font-weight: bold;
+}
