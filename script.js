@@ -77,6 +77,20 @@ let prompts = [
     faction: "Peasants",
   },
   {
+    text: "The merchants demand a lower minimum wage.",
+    yes: () => {
+      gdp += 4;
+      inflation += 2;
+      unemployment -= 1;
+      inequality += 3;
+    },
+    no: () => {
+      gdp -= 2;
+      inequality -= 1;
+    },
+    faction: "Merchants",
+  },
+  {
     text: "The merchants want lower taxes.",
     yes: () => {
       gdp += 3;
