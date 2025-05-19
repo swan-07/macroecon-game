@@ -197,6 +197,15 @@ const endingText = document.getElementById("endingText");
 endingScreen.style.pointerEvents = "auto";
 
 letsSeeBtn.addEventListener("click", () => {
+  const allAudios = document.querySelectorAll("audio");
+  allAudios.forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0; 
+  });
+
+  const sound = document.getElementById("endingSound");
+  sound.play();
+
   const chosen = window.endingResult || {
     text: "Ending ???: Mysterious fate awaits...",
     color: "#34495e",
