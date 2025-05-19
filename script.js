@@ -146,6 +146,17 @@ let prompts = [
     },
     faction: "Bankers",
   },
+  {
+    text: "The bankers want a lowered federal funds rate.",
+    yes: () => {
+      gdp += 5;
+    },
+    no: () => {
+      unemployment += 2;
+      gdp -= 7;
+    },
+    faction: "Bankers",
+  }
 ];
 
 function updateStats() {
